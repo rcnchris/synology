@@ -23,12 +23,8 @@ return [
             'port' => 5551,
             'protocol' => 'http',
             'version' => 1,
-//            'user' => 'mycore',
-//            'pwd' => 'kEn5iI',
-            'user' => 'rcn',
-            'pwd' => 'maracla',
-//            'user' => 'phpunit',
-//            'pwd' => '?)(8ct',
+            'user' => 'phpunit',
+            'pwd' => '?)(8ct',
         ],
         [
             'name' => 'nasdev',
@@ -37,10 +33,8 @@ return [
             'port' => 5552,
             'protocol' => 'http',
             'version' => 1,
-            'user' => 'rcn',
-            'pwd' => 'maracla',
-//            'user' => 'mycore',
-//            'pwd' => 'c=|#B@',
+            'user' => 'mycore',
+            'pwd' => 'c=|#B@',
             'format' => 'sid'
         ]
     ]

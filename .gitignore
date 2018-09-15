@@ -1,0 +1,5 @@
+/tests/
+/vendor/
+/composer.lock
+/public/coverage/
+/public/doc/

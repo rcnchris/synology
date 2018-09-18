@@ -14,7 +14,7 @@
  * @link     https://github.com/rcnchris On Github
  */
 return [
-    'debug' => true,
+    'debug' => false,
     'servers' => [
         [
             'name' => 'nas',

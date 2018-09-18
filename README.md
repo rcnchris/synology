@@ -19,3 +19,11 @@
  # Pour l'utiliser dans son projet
  composer require rcnchris/synology
 </pre>
+
+## Utilisation
+
+``````
+$syno = new \Rcnchris\Synology\Synology($config->get('servers'));
+$response = $syno->request('FileStation', 'List', 'list_share', ['limit' => 5], 'nasdev');
+$request->exec('Liste des dossiers', true, 'shares', 'name')->toArray();
+``````

@@ -18,7 +18,7 @@ $syno = new \Rcnchris\Synology\Synology($config->get('servers'));
 <div class="row">
     <div class="col">
 
-        <h2>Construction</h2>
+        <h2><i class="fa fa-cogs"></i> Construction</h2>
 
         <div class="alert alert-secondary">
             <pre>$syno = new \Rcnchris\Synology\Synology($config->get('servers'));</pre>
@@ -64,6 +64,18 @@ $syno = new \Rcnchris\Synology\Synology($config->get('servers'));
                     <?php endforeach; ?>
                     </tbody>
                 </table>
+                <hr/>
+                <h3>Liste des packages de chaque serveur</h3>
+                <div class="row">
+                    <div class="col-6">
+                        <p>Uniquement la liste des packages</p>
+                        <?php r($syno->getPackagesList()->toArray()) ?>
+                    </div>
+                    <div class="col-6">
+                        <p>Avec le nom des APIs pour chaque pacakge</p>
+                        <?php r($syno->getPackagesList('nasdev', true)->toArray()) ?>
+                    </div>
+                </div>
             </div>
             <div class="col-12">
                 <hr/>
@@ -75,12 +87,12 @@ $syno = new \Rcnchris\Synology\Synology($config->get('servers'));
 
 <?php include 'request.php' ?>
 <?php include 'package.php' ?>
-<?php //include "packages/antivirus.php" ?>
+<?php include "packages/antivirus.php" ?>
 <?php //include "packages/audiostation.php" ?>
 <?php //include "packages/backup.php" ?>
 <?php //include "packages/documentviewer.php" ?>
 <?php // include "packages/downloadstation.php" ?>
-<?php include "packages/filestation.php" ?>
+<?php //include "packages/filestation.php" ?>
 <?php //include "packages/surveillancestation.php" ?>
 <?php //include "packages/videostation.php" ?>
 

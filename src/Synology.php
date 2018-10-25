@@ -236,14 +236,19 @@ class Synology
     /**
      * Obtenir toutes les définitions disponibles
      *
+     * ### Example
      * - `$syno->getAllDefinitions();`
+     * - `$syno->getAllDefinitions('nasdev');`
+     *
+     * @param string|null $serverName Nom du serveur tel que définit dans la configuration
      *
      * @return array
      * @throws \Exception
      */
-    public function getAllDefinitions()
+    public function getAllDefinitions($serverName = null)
     {
-        $url = $this->baseUrl() . '/query.cgi?api=SYNO.API.Info&method=query&version=1&query=all';
+        $serverName = $this->getDefaultServerName($serverName);
+        $url = $this->baseUrl($serverName) . '/query.cgi?api=SYNO.API.Info&method=query&version=1&query=all';
 
         $response = $this
             ->getCurl()
@@ -252,17 +257,50 @@ class Synology
             ->getResponse();
 
         if ($response->get('success') && $response->has('data')) {
-            $this->definitions = $response->get('data')->toArray();
+            $this->definitions[$serverName] = $response->get('data')->toArray();
         }
-        return $this->definitions;
+        return $this->definitions[$serverName];
+    }
+
+    /**
+     * Obtenir la liste de tous les packages
+     *
+     * ### Example
+     * - `$syno->getPackagesList();`
+     * - `$syno->getPackagesList('nasdev');`
+     *
+     * @param string|null $serverName Nom du serveur tel que définit dans la configuration
+     *
+     * @return \Rcnchris\Core\Tools\Items
+     */
+    public function getPackagesList($serverName = null, $withApis = false)
+    {
+        $prefix = $this->getPrefixName(true);
+        $apis = array_keys($this->getAllDefinitions($serverName));
+        if ($withApis) {
+            $ret = [];
+            foreach ($apis as $k => $apiFullName) {
+                $apiName = str_replace($this->getPrefixName(true), '', $apiFullName);
+                $parts = explode('.', $apiName);
+                $ret[$parts[0]][] = isset($parts[1]) ? $parts[1] : null;
+            }
+            $apis = $ret;
+        } else {
+            $apis = array_map(function ($apiFullName) use ($prefix, $withApis) {
+                $apiName = str_replace($prefix, '', $apiFullName);
+                $parts = explode('.', $apiName);
+                return $parts[0];
+            }, $apis);
+            $apis = array_unique($apis);
+        }
+        return new Items($apis);
     }
 
     /**
      * Obtenir la définition d'une ou plusieurs APIs
      *
-     * @param string $apiNames Nom des APIs séparées par des virgules (AudioStation.Genre, VideoStation.Movie...)
-     *
-     * @param null   $serverName
+     * @param string      $apiNames   Nom des APIs séparées par des virgules (AudioStation.Genre, VideoStation.Movie...)
+     * @param string|null $serverName Nom du serveur tel que définit dans la configuration
      *
      * @return array|bool
      * @throws \Exception
@@ -644,5 +682,19 @@ class Synology
             unset($this->sids[$serverName][$packageName]);
         }
         return $response;
+    }
+
+    /**
+     * Obtenir le nom du serveur par défaut si aucin serveur n'est spécifié
+     *
+     * @param string|null $serverName Nom du serveur
+     *
+     * @return string
+     */
+    private function getDefaultServerName($serverName = null)
+    {
+        return is_null($serverName)
+            ? $this->getConfigs()->first()->name
+            : $this->getConfigs($serverName)->name;
     }
 }

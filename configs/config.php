@@ -14,7 +14,7 @@
  * @link     https://github.com/rcnchris On Github
  */
 return [
-    'debug' => false,
+    'debug' => true,
     'servers' => [
         [
             'name' => 'nas',
@@ -23,8 +23,8 @@ return [
             'port' => 5551,
             'protocol' => 'http',
             'version' => 1,
-            'user' => 'phpunit',
-            'pwd' => '?)(8ct',
+            'user' => 'rcn',
+            'pwd' => 'maracla',
         ],
         [
             'name' => 'nasdev',

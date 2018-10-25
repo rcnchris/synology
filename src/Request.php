@@ -72,6 +72,7 @@ class Request
     /**
      * Obtenir l'instance de Synology
      *
+     * ### Example
      * - `$request->getSynology();`
      *
      * @return Synology
@@ -84,6 +85,7 @@ class Request
     /**
      * Obtenir les options de la requête
      *
+     * ### Example
      * - `$request->getOptions();`
      * - `$request->getOptions('packageName');`
      * - `$request->getOptions('method', 'list');`
@@ -106,6 +108,7 @@ class Request
     /**
      * Obtenir l'URL de la requête
      *
+     * ### Example
      * - `$request->url();`
      *
      * @return bool|string
@@ -138,6 +141,7 @@ class Request
     /**
      * Exécution de la requête
      *
+     * ### Example
      * - `$request->exec('Liste des genres')->toArray();`
      * - `$request->exec('Liste des genres', true, 'genres', 'name')->toArray();`
      *
@@ -183,7 +187,6 @@ class Request
                     );
 
                 $error->set('server', $this->getOptions('serverName'));
-                //$error->set('apiName', $this->getOptions('apiName'));
                 $error->set('method', $this->getOptions('method'));
                 $error->set('params', $this->getOptions('params'));
 
@@ -199,6 +202,7 @@ class Request
     /**
      * Définir les options de la requête
      *
+     * ### Example
      * - `$this->setOptions($options);`
      *
      * @param array $options Options de la requête
